@@ -61,15 +61,15 @@ export const SmartwatchSimulator: React.FC<SmartwatchSimulatorProps> = ({
   };
 
   return (
-    <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end animate-fade-in">
+    <div className="fixed inset-x-3 bottom-3 sm:inset-x-auto sm:bottom-6 sm:right-6 z-50 flex flex-col items-center sm:items-end animate-fade-in">
       {/* Outer Smartwatch Container */}
       <div
-        className={`w-80 rounded-[44px] p-5 bg-white dark:bg-[#1E293B] shadow-2xl border-4 border-[#E2E8F0] dark:border-[#334155] text-[#172033] dark:text-white relative transition-all ${
+        className={`w-full max-w-[340px] sm:w-80 rounded-[36px] sm:rounded-[44px] p-3.5 sm:p-5 bg-white dark:bg-[#1E293B] shadow-2xl border-4 border-[#E2E8F0] dark:border-[#334155] text-[#172033] dark:text-white relative transition-all ${
           isHapticBuzzing ? "ring-4 ring-[#5B5FEF] translate-x-1" : ""
         }`}
       >
         {/* Top Control Bar */}
-        <div className="flex items-center justify-between px-2 pb-3 mb-2 border-b border-[#E2E8F0] dark:border-white/10 text-xs">
+        <div className="flex items-center justify-between px-2 pb-2.5 mb-2 border-b border-[#E2E8F0] dark:border-white/10 text-xs">
           <div className="flex items-center gap-1.5 text-[#475569] dark:text-white/80">
             <span className="w-2 h-2 rounded-full bg-[#22C55E]"></span>
             <span className="font-bold text-[11px] truncate max-w-[130px]">
@@ -82,6 +82,7 @@ export const SmartwatchSimulator: React.FC<SmartwatchSimulatorProps> = ({
             <button
               onClick={onClose}
               className="p-1 rounded-full bg-[#F1F5F9] dark:bg-white/10 hover:bg-[#E2E8F0] dark:hover:bg-white/20 text-[#64748B] dark:text-white transition-colors"
+              aria-label="Tutup Simulator"
             >
               <X className="w-3.5 h-3.5" />
             </button>
@@ -89,7 +90,7 @@ export const SmartwatchSimulator: React.FC<SmartwatchSimulatorProps> = ({
         </div>
 
         {/* Smartwatch Screen */}
-        <div className="w-full h-[360px] rounded-[32px] bg-[#F8FAFC] dark:bg-[#0A0E1A] p-4 flex flex-col justify-between border border-[#E2E8F0] dark:border-white/10 relative overflow-hidden shadow-inner text-[#172033] dark:text-white">
+        <div className="w-full h-[320px] sm:h-[360px] rounded-[26px] sm:rounded-[32px] bg-[#F8FAFC] dark:bg-[#0A0E1A] p-3.5 sm:p-4 flex flex-col justify-between border border-[#E2E8F0] dark:border-white/10 relative overflow-hidden shadow-inner text-[#172033] dark:text-white">
           {/* Watch Status Bar */}
           <div className="flex items-center justify-between text-[11px] text-[#64748B] dark:text-white/70 font-semibold mb-2">
             <span>08:45</span>

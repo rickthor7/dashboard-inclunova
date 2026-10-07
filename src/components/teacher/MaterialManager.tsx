@@ -73,7 +73,7 @@ export const MaterialManager: React.FC<MaterialManagerProps> = ({
       </div>
 
       {/* Subject Filter Bar */}
-      <div className="flex items-center gap-2 overflow-x-auto pb-2">
+      <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-2">
         {subjects.map((subj) => (
           <button
             key={subj.id}

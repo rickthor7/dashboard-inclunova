@@ -48,12 +48,12 @@ export const ParentOverview: React.FC<ParentOverviewProps> = ({
       </div>
 
       {/* 2. Child Hero Card (Exact specifications from dashboard_desain.md line 247) */}
-      <div className="card-friendly-static p-6 sm:p-8 bg-gradient-to-br from-white via-[#F8FAFC] to-[#DCFCE7]/40 dark:from-[#1E293B] dark:via-[#1E293B] dark:to-[#0F172A] border border-[#BBF7D0] dark:border-[#334155] relative overflow-hidden shadow-sm">
+      <div className="card-friendly-static p-4 sm:p-6 lg:p-8 bg-gradient-to-br from-white via-[#F8FAFC] to-[#DCFCE7]/40 dark:from-[#1E293B] dark:via-[#1E293B] dark:to-[#0F172A] border border-[#BBF7D0] dark:border-[#334155] relative overflow-hidden shadow-sm">
         <div className="absolute top-0 right-0 w-72 h-72 bg-gradient-to-bl from-[#22C55E]/10 via-[#FACC15]/10 to-transparent dark:from-[#22C55E]/20 dark:via-[#FACC15]/20 rounded-full blur-2xl -mr-16 -mt-16 pointer-events-none"></div>
 
         <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6">
-          <div className="flex items-center gap-5">
-            <div className="relative">
+          <div className="flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-4 sm:gap-5">
+            <div className="relative flex-shrink-0">
               <img
                 src={child.avatar}
                 alt={child.name}

@@ -16,7 +16,10 @@ import {
   Clock,
   CheckSquare,
   MapPin,
-  HelpCircle
+  HelpCircle,
+  X,
+  Wifi,
+  GraduationCap
 } from "lucide-react";
 
 interface SidebarProps {
@@ -24,13 +27,19 @@ interface SidebarProps {
   activeTab: string;
   onTabChange: (tabId: string) => void;
   onOpenSyncInfo: () => void;
+  isMobileOpen?: boolean;
+  onCloseMobile?: () => void;
+  onRoleChange?: (role: UserRole) => void;
 }
 
 export const Sidebar: React.FC<SidebarProps> = ({
   currentRole,
   activeTab,
   onTabChange,
-  onOpenSyncInfo
+  onOpenSyncInfo,
+  isMobileOpen = false,
+  onCloseMobile,
+  onRoleChange
 }) => {
   const teacherMenuItems = [
     { id: "overview", label: "Overview", icon: LayoutDashboard, badge: undefined },
@@ -53,9 +62,37 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
   const menuItems = currentRole === "teacher" ? teacherMenuItems : parentMenuItems;
 
-  return (
-    <aside className="w-64 flex-shrink-0 bg-white dark:bg-[#1E293B] border-r border-[#E2E8F0] dark:border-[#334155] p-4 flex flex-col justify-between hidden md:flex min-h-[calc(100vh-65px)]">
+  const handleItemClick = (id: string) => {
+    onTabChange(id);
+    if (onCloseMobile) {
+      onCloseMobile();
+    }
+  };
+
+  const renderContent = (isMobile: boolean = false) => (
+    <>
       <div>
+        {/* Mobile Header with Close Button */}
+        {isMobile && (
+          <div className="flex items-center justify-between pb-3 mb-3 border-b border-[#E2E8F0] dark:border-[#334155]">
+            <div className="flex items-center gap-2.5">
+              <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-[#5B5FEF] via-[#38BDF8] to-[#22C55E] flex items-center justify-center text-white font-extrabold text-sm">
+                I
+              </div>
+              <span className="font-extrabold text-base tracking-tight text-[#172033] dark:text-[#F8FAFC]">
+                INCLU<span className="text-[#5B5FEF]">NOVA</span>
+              </span>
+            </div>
+            <button
+              onClick={onCloseMobile}
+              className="p-1.5 rounded-xl text-[#64748B] dark:text-[#94A3B8] hover:bg-[#F1F5F9] dark:hover:bg-[#0F172A] transition-colors"
+              aria-label="Tutup Menu"
+            >
+              <X className="w-5 h-5" />
+            </button>
+          </div>
+        )}
+
         {/* Role Identity Tag */}
         <div className="mb-4 px-3 py-2 rounded-2xl bg-[#F8FAFC] dark:bg-[#0F172A] border border-[#E2E8F0]/80 dark:border-[#334155]">
           <p className="text-[10px] font-bold tracking-wider text-[#64748B] dark:text-[#94A3B8] uppercase">
@@ -66,6 +103,34 @@ export const Sidebar: React.FC<SidebarProps> = ({
           </p>
         </div>
 
+        {/* Role Quick Switch inside mobile drawer */}
+        {isMobile && onRoleChange && (
+          <div className="mb-3 grid grid-cols-2 gap-1.5 p-1 rounded-xl bg-[#F1F5F9] dark:bg-[#0F172A] border border-[#E2E8F0] dark:border-[#334155]">
+            <button
+              onClick={() => onRoleChange("teacher")}
+              className={`flex items-center justify-center gap-1.5 py-1.5 px-2 rounded-lg text-xs font-bold transition-all ${
+                currentRole === "teacher"
+                  ? "bg-white dark:bg-[#1E293B] text-[#5B5FEF] shadow-sm"
+                  : "text-[#64748B] dark:text-[#94A3B8]"
+              }`}
+            >
+              <GraduationCap className="w-3.5 h-3.5" />
+              <span>Guru</span>
+            </button>
+            <button
+              onClick={() => onRoleChange("parent")}
+              className={`flex items-center justify-center gap-1.5 py-1.5 px-2 rounded-lg text-xs font-bold transition-all ${
+                currentRole === "parent"
+                  ? "bg-white dark:bg-[#1E293B] text-[#22C55E] shadow-sm"
+                  : "text-[#64748B] dark:text-[#94A3B8]"
+              }`}
+            >
+              <Users className="w-3.5 h-3.5" />
+              <span>Orang Tua</span>
+            </button>
+          </div>
+        )}
+
         {/* Navigation Links */}
         <nav className="space-y-1">
           {menuItems.map((item) => {
@@ -74,7 +139,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
             return (
               <button
                 key={item.id}
-                onClick={() => onTabChange(item.id)}
+                onClick={() => handleItemClick(item.id)}
                 className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-xs sm:text-sm font-semibold transition-all ${
                   isActive
                     ? currentRole === "teacher"
@@ -124,7 +189,10 @@ export const Sidebar: React.FC<SidebarProps> = ({
             </div>
           </div>
           <button
-            onClick={onOpenSyncInfo}
+            onClick={() => {
+              onOpenSyncInfo();
+              if (onCloseMobile) onCloseMobile();
+            }}
             className="mt-2.5 w-full text-center text-[11px] font-bold text-[#5B5FEF] dark:text-[#A5B4FC] hover:underline flex items-center justify-center gap-1"
           >
             <HelpCircle className="w-3 h-3" />
@@ -132,6 +200,32 @@ export const Sidebar: React.FC<SidebarProps> = ({
           </button>
         </div>
       </div>
-    </aside>
+    </>
+  );
+
+  return (
+    <>
+      {/* 1. Desktop Sidebar */}
+      <aside className="w-64 flex-shrink-0 bg-white dark:bg-[#1E293B] border-r border-[#E2E8F0] dark:border-[#334155] p-4 flex flex-col justify-between hidden md:flex min-h-[calc(100vh-65px)]">
+        {renderContent(false)}
+      </aside>
+
+      {/* 2. Mobile Slide-Over Drawer with Backdrop */}
+      {isMobileOpen && (
+        <div className="fixed inset-0 z-50 md:hidden flex animate-fade-in">
+          {/* Backdrop */}
+          <div
+            className="fixed inset-0 bg-black/60 backdrop-blur-sm transition-opacity"
+            onClick={onCloseMobile}
+            aria-hidden="true"
+          />
+
+          {/* Drawer content */}
+          <aside className="relative z-10 w-72 max-w-[85vw] bg-white dark:bg-[#1E293B] h-full p-4 flex flex-col justify-between shadow-2xl border-r border-[#E2E8F0] dark:border-[#334155] overflow-y-auto">
+            {renderContent(true)}
+          </aside>
+        </div>
+      )}
+    </>
   );
 };

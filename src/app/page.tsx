@@ -26,6 +26,7 @@ import { ParentActivity } from "@/components/parent/ParentActivity";
 import { ParentTasks } from "@/components/parent/ParentTasks";
 import { ParentMonitoring } from "@/components/parent/ParentMonitoring";
 import { ParentMobileNav } from "@/components/parent/ParentMobileNav";
+import { TeacherMobileNav } from "@/components/teacher/TeacherMobileNav";
 import { SmartwatchSimulator } from "@/components/simulator/SmartwatchSimulator";
 import { StudentDetailModal } from "@/components/modals/StudentDetailModal";
 import { CreateMaterialModal } from "@/components/modals/CreateMaterialModal";
@@ -81,6 +82,7 @@ export default function Home() {
   const [isCreateQuizOpen, setIsCreateQuizOpen] = useState(false);
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
   const [isSyncInfoOpen, setIsSyncInfoOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   // Smartwatch Simulator
   const [isWatchOpen, setIsWatchOpen] = useState(false);
@@ -179,10 +181,11 @@ export default function Home() {
         isWatchOpen={isWatchOpen}
         isDarkMode={isDarkMode}
         onToggleDarkMode={toggleDarkMode}
+        onOpenMobileMenu={() => setIsMobileMenuOpen(true)}
       />
 
-      <div className="flex-1 flex max-w-7xl w-full mx-auto pb-16 md:pb-6">
-        {/* Sidebar */}
+      <div className="flex-1 flex max-w-7xl w-full mx-auto pb-28 md:pb-8">
+        {/* Sidebar (Desktop + Mobile Slide-Over Drawer) */}
         <Sidebar
           currentRole={currentRole}
           activeTab={currentRole === "teacher" ? activeTeacherTab : activeParentTab}
@@ -194,10 +197,13 @@ export default function Home() {
             }
           }}
           onOpenSyncInfo={() => setIsSyncInfoOpen(true)}
+          isMobileOpen={isMobileMenuOpen}
+          onCloseMobile={() => setIsMobileMenuOpen(false)}
+          onRoleChange={(role) => setCurrentRole(role)}
         />
 
         {/* Main Workspace Area */}
-        <main className="flex-1 p-4 lg:p-8 min-w-0">
+        <main className="flex-1 p-3 sm:p-5 lg:p-8 min-w-0">
           {currentRole === "teacher" ? (
             /* TEACHER DASHBOARD VIEWS */
             <>
@@ -292,14 +298,14 @@ export default function Home() {
       {!isWatchOpen && (
         <button
           onClick={() => setIsWatchOpen(true)}
-          className="fixed bottom-6 right-6 z-40 px-4 py-3 rounded-full bg-white hover:bg-[#F8FAFC] text-[#172033] dark:bg-[#1E293B] dark:hover:bg-[#0F172A] dark:text-white shadow-xl border-2 border-[#5B5FEF] flex items-center gap-2.5 text-xs font-bold transition-all hover:scale-105"
+          className="fixed bottom-20 right-4 sm:bottom-6 sm:right-6 z-30 px-3.5 py-2.5 sm:px-4 sm:py-3 rounded-full bg-white hover:bg-[#F8FAFC] text-[#172033] dark:bg-[#1E293B] dark:hover:bg-[#0F172A] dark:text-white shadow-xl border-2 border-[#5B5FEF] flex items-center gap-2 text-xs font-bold transition-all hover:scale-105"
         >
-          <span className="relative flex h-3 w-3">
+          <span className="relative flex h-2.5 w-2.5 sm:h-3 sm:w-3">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#5B5FEF] opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-3 w-3 bg-[#5B5FEF]"></span>
+            <span className="relative inline-flex rounded-full h-2.5 w-2.5 sm:h-3 sm:w-3 bg-[#5B5FEF]"></span>
           </span>
           <Watch className="w-4 h-4 text-[#38BDF8]" />
-          <span>Buka Smartwatch Siswa</span>
+          <span className="hidden xs:inline">Smartwatch Siswa</span>
         </button>
       )}
 
@@ -310,6 +316,15 @@ export default function Home() {
         activeStudent={selectedStudent || childAlya}
         incomingNotification={watchNotificationMessage}
       />
+
+      {/* Mobile Teacher Bottom Navigation */}
+      {currentRole === "teacher" && (
+        <TeacherMobileNav
+          activeTab={activeTeacherTab}
+          onTabChange={(tab) => setActiveTeacherTab(tab)}
+          onOpenMobileMenu={() => setIsMobileMenuOpen(true)}
+        />
+      )}
 
       {/* Mobile Parent Bottom Navigation */}
       {currentRole === "parent" && (

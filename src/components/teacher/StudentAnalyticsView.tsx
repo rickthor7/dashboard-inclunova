@@ -59,40 +59,40 @@ export const StudentAnalyticsView: React.FC<StudentAnalyticsViewProps> = ({
             Pilih Siswa untuk Ditinjau
           </h3>
 
-          <div className="space-y-2">
+          <div className="flex lg:flex-col overflow-x-auto lg:overflow-visible gap-2 pb-2 lg:pb-0 no-scrollbar">
             {students.map((student) => {
               const isSelected = selectedStudent.id === student.id;
               return (
                 <div
                   key={student.id}
                   onClick={() => setSelectedStudent(student)}
-                  className={`p-3 rounded-2xl border cursor-pointer transition-all flex items-center justify-between ${
+                  className={`p-3 rounded-2xl border cursor-pointer transition-all flex items-center justify-between flex-shrink-0 w-56 sm:w-64 lg:w-full ${
                     isSelected
                       ? "bg-[#EEF0FF] border-[#5B5FEF] shadow-sm"
                       : "hover:bg-[#F8FAFC] border-[#E2E8F0]"
                   }`}
                 >
-                  <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-3 min-w-0">
                     <img
                       src={student.avatar}
                       alt={student.name}
-                      className="w-10 h-10 rounded-xl object-cover ring-1 ring-[#CBD5E1]"
+                      className="w-10 h-10 rounded-xl object-cover ring-1 ring-[#CBD5E1] flex-shrink-0"
                     />
-                    <div>
+                    <div className="truncate">
                       <h4
-                        className={`text-xs font-extrabold ${
+                        className={`text-xs font-extrabold truncate ${
                           isSelected ? "text-[#5B5FEF]" : "text-[#172033]"
                         }`}
                       >
                         {student.name}
                       </h4>
-                      <span className="text-[10px] text-[#64748B] font-semibold">
+                      <span className="text-[10px] text-[#64748B] font-semibold truncate block">
                         Nilai: {student.averageScore} • Progres: {student.progress}%
                       </span>
                     </div>
                   </div>
                   <ChevronRight
-                    className={`w-4 h-4 ${isSelected ? "text-[#5B5FEF]" : "text-[#CBD5E1]"}`}
+                    className={`w-4 h-4 flex-shrink-0 ${isSelected ? "text-[#5B5FEF]" : "text-[#CBD5E1]"}`}
                   />
                 </div>
               );

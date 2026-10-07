@@ -48,10 +48,10 @@ export const TeacherOverview: React.FC<TeacherOverviewProps> = ({
             Yuk lihat perkembangan kelas inklusi hari ini dan kirimkan pembelajaran seru.
           </p>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 w-full sm:w-auto">
           <button
             onClick={onSendCheerToAll}
-            className="px-3.5 py-2 rounded-2xl bg-white dark:bg-[#1E293B] hover:bg-[#EEF0FF] dark:hover:bg-[#0F172A] text-[#5B5FEF] dark:text-[#A5B4FC] border border-[#C7D2FE] dark:border-[#334155] text-xs font-bold transition-all shadow-sm flex items-center gap-2"
+            className="w-full sm:w-auto px-3.5 py-2 rounded-2xl bg-white dark:bg-[#1E293B] hover:bg-[#EEF0FF] dark:hover:bg-[#0F172A] text-[#5B5FEF] dark:text-[#A5B4FC] border border-[#C7D2FE] dark:border-[#334155] text-xs font-bold transition-all shadow-sm flex items-center justify-center gap-2"
           >
             <Zap className="w-4 h-4 text-[#FACC15] fill-[#FACC15]" />
             <span>Kirim Semangat Haptik ke Semua Siswa</span>

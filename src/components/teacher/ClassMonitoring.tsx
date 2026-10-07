@@ -87,7 +87,7 @@ export const ClassMonitoring: React.FC<ClassMonitoringProps> = ({
           />
         </div>
 
-        <div className="flex items-center gap-2 w-full md:w-auto overflow-x-auto pb-1 md:pb-0">
+        <div className="flex items-center gap-2 w-full md:w-auto overflow-x-auto no-scrollbar pb-1 md:pb-0">
           <span className="text-xs font-bold text-[#64748B] whitespace-nowrap">Status:</span>
           {[
             { id: "all", label: "Semua" },
